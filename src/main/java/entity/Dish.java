@@ -1,7 +1,7 @@
 package entity;
 
 public class Dish {
-    private int id;
+    private long id;
     private String name;
     private String unitPrice;
 
@@ -9,7 +9,7 @@ public class Dish {
 
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

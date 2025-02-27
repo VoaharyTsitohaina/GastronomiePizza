@@ -5,13 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa510158-494c-487f-81ed-9e7e6faa826a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/db/migration/create_table.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db/database.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/CrudOperations.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/DishCrudOperations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/DishCrudOperations.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/mapper/UnitMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/mapper/UnitMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entity/Dish.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/Dish.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entity/Ingredient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/Ingredient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,8 +55,8 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.tabs&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -63,6 +66,29 @@
     ]
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Voahary\bossy\L2\todo\prog3\gastropizza\src\main\java" />
+      <recent name="C:\Voahary\bossy\L2\todo\prog3\gastropizza\src\main\java\dao" />
+      <recent name="C:\Voahary\bossy\L2\todo\prog3\gastropizza\src\main\db\migration" />
+      <recent name="C:\Voahary\bossy\L2\todo\prog3\gastropizza\src\main" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="GastopizzaApplication" type="Application" factoryName="Application" nameIsGenerated="true">
+      <envs>
+        <env name="DATABASE_HOST" value="jdbc:postgresql://localhost:5432/gastropizza" />
+        <env name="DATABASE_USER" value="pizzaman" />
+        <env name="DATABASE_PASSWORD" value="qwerty" />
+        <env name="DATABASE_NAME" value="gastropizza" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="GastopizzaApplication" />
+      <module name="gastropizza" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -82,7 +108,10 @@
       <workItem from="1740169428822" duration="489000" />
       <workItem from="1740320831909" duration="1636000" />
       <workItem from="1740368967778" duration="9100000" />
-      <workItem from="1740390851907" duration="6884000" />
+      <workItem from="1740390851907" duration="10224000" />
+      <workItem from="1740491008307" duration="8362000" />
+      <workItem from="1740546270695" duration="383000" />
+      <workItem from="1740647629366" duration="4100000" />
     </task>
     <servers />
   </component>
