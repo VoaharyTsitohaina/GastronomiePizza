@@ -5,16 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa510158-494c-487f-81ed-9e7e6faa826a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/db/migration/create_table.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/database.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/CrudOperations.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/DishCrudOperations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/DishCrudOperations.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/mapper/UnitMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/mapper/UnitMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/DataSource.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/db/migration/create_table.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/migration/create_table.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/db/testdata/insert_testdata.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/testdata/insert_testdata.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/entity/Dish.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/Dish.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entity/DishIngredient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/DishIngredient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/entity/Ingredient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/Ingredient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/GastroCrudOperationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/DishCostAndMarginTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,29 +42,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Voahary/bossy/L1/Programmation/prog2/presence&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.tabs&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.GastopizzaApplication.executor": "Run",
+    "JUnit.DishCostAndMarginTest.executor": "Run",
+    "JUnit.IngredientCrudOperationsIT.executor": "Run",
+    "JUnit.IngredientCrudOperationsIT.testFilterByDateRange.executor": "Run",
+    "JUnit.StockMovementCreationIT.executor": "Run",
+    "JUnit.StockServiceIT.executor": "Run",
+    "JUnit.StockServiceIT.testAvailableQuantityWithExitMovements.executor": "Debug",
+    "JUnit.StockServiceIT.testAvailableQuantityWithoutExitMovements.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Voahary/bossy/L1/Programmation/prog2/presence",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pathVariables",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect&quot;: [
-      &quot;PostgreSQL&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ],
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect": [
+      "PostgreSQL"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Voahary\bossy\L2\todo\prog3\gastropizza\src\main\java" />
@@ -74,20 +84,98 @@
       <recent name="C:\Voahary\bossy\L2\todo\prog3\gastropizza\src\main" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.StockMovementCreationIT">
     <configuration name="GastopizzaApplication" type="Application" factoryName="Application" nameIsGenerated="true">
-      <envs>
-        <env name="DATABASE_HOST" value="jdbc:postgresql://localhost:5432/gastropizza" />
-        <env name="DATABASE_USER" value="pizzaman" />
-        <env name="DATABASE_PASSWORD" value="qwerty" />
-        <env name="DATABASE_NAME" value="gastropizza" />
-      </envs>
       <option name="MAIN_CLASS_NAME" value="GastopizzaApplication" />
       <module name="gastropizza" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DishCostAndMarginTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gastropizza" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DishCostAndMarginTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StockMovementCreationIT" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gastropizza" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="StockMovementCreationIT" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <envs>
+        <env name="DATABASE_HOST" value="localhost" />
+        <env name="DATABASE_USER" value="pizzaman" />
+        <env name="DATABASE_PASSWORD" value="qwerty" />
+        <env name="DATABASE_NAME" value="gastropizza" />
+      </envs>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StockServiceIT" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gastropizza" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="StockServiceIT" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <envs>
+        <env name="DATABASE_HOST" value="localhost" />
+        <env name="DATABASE_USER" value="pizzaman" />
+        <env name="DATABASE_PASSWORD" value="qwerty" />
+        <env name="DATABASE_NAME" value="gastropizza" />
+      </envs>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StockServiceIT.testAvailableQuantityWithExitMovements" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gastropizza" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="StockServiceIT" />
+      <option name="METHOD_NAME" value="testAvailableQuantityWithExitMovements" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StockServiceIT.testAvailableQuantityWithoutExitMovements" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gastropizza" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="StockServiceIT" />
+      <option name="METHOD_NAME" value="testAvailableQuantityWithoutExitMovements" />
+      <option name="TEST_OBJECT" value="method" />
+      <envs>
+        <env name="DATABASE_HOST" value="localhost" />
+        <env name="DATABASE_USER" value="pizzaman" />
+        <env name="DATABASE_PASSWORD" value="qwerty" />
+        <env name="DATABASE_NAME" value="gastropizza" />
+      </envs>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.GastopizzaApplication" />
+      <item itemvalue="JUnit.StockMovementCreationIT" />
+      <item itemvalue="JUnit.StockServiceIT.testAvailableQuantityWithExitMovements" />
+      <item itemvalue="JUnit.DishCostAndMarginTest" />
+      <item itemvalue="JUnit.StockServiceIT" />
+      <item itemvalue="JUnit.StockServiceIT.testAvailableQuantityWithoutExitMovements" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.StockMovementCreationIT" />
+        <item itemvalue="JUnit.StockServiceIT" />
+        <item itemvalue="JUnit.StockServiceIT.testAvailableQuantityWithExitMovements" />
+        <item itemvalue="JUnit.StockServiceIT.testAvailableQuantityWithoutExitMovements" />
+        <item itemvalue="JUnit.DishCostAndMarginTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -111,11 +199,16 @@
       <workItem from="1740390851907" duration="10224000" />
       <workItem from="1740491008307" duration="8362000" />
       <workItem from="1740546270695" duration="383000" />
-      <workItem from="1740647629366" duration="4100000" />
+      <workItem from="1740647629366" duration="16016000" />
+      <workItem from="1740752682878" duration="29250000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

@@ -3,7 +3,7 @@ package entity;
 public class DishIngredient {
     private Dish dish;
     private Ingredient ingredient;
-    private int requiredQuantity;
+    private double requiredQuantity;
     private Unit unit;
 
     public DishIngredient() {
@@ -26,11 +26,11 @@ public class DishIngredient {
         this.ingredient = ingredient;
     }
 
-    public int getRequiredQuantity() {
+    public double getRequiredQuantity() {
         return requiredQuantity;
     }
 
-    public void setRequiredQuantity(int requiredQuantity) {
+    public void setRequiredQuantity(double requiredQuantity) {
         this.requiredQuantity = requiredQuantity;
     }
 

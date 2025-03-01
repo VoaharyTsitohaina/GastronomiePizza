@@ -1,0 +1,708 @@
+// PARTIE 1: CLASSE DE FILTRE
+package dao.filter;
+
+import entity.Unit;
+
+import java.time.LocalDate;
+import java.util.Optional;
+
+public class IngredientFilter {
+    private Optional<String> nameContains = Optional.empty();
+    private Optional<Unit> unit = Optional.empty();
+    private Optional<Double> minPrice = Optional.empty();
+    private Optional<Double> maxPrice = Optional.empty();
+    private Optional<LocalDate> modifiedAfter = Optional.empty();
+    private Optional<LocalDate> modifiedBefore = Optional.empty();
+    private Optional<String> sortBy = Optional.empty();
+    private Optional<Boolean> sortAscending = Optional.of(true);
+    private int page = 0;
+    private int pageSize = 10;
+
+    public Optional<String> getNameContains() {
+        return nameContains;
+    }
+
+    public IngredientFilter setNameContains(String nameContains) {
+        this.nameContains = Optional.ofNullable(nameContains);
+        return this;
+    }
+
+    public Optional<Unit> getUnit() {
+        return unit;
+    }
+
+    public IngredientFilter setUnit(Unit unit) {
+        this.unit = Optional.ofNullable(unit);
+        return this;
+    }
+
+    public Optional<Double> getMinPrice() {
+        return minPrice;
+    }
+
+    public IngredientFilter setMinPrice(Double minPrice) {
+        this.minPrice = Optional.ofNullable(minPrice);
+        return this;
+    }
+
+    public Optional<Double> getMaxPrice() {
+        return maxPrice;
+    }
+
+    public IngredientFilter setMaxPrice(Double maxPrice) {
+        this.maxPrice = Optional.ofNullable(maxPrice);
+        return this;
+    }
+
+    public Optional<LocalDate> getModifiedAfter() {
+        return modifiedAfter;
+    }
+
+    public IngredientFilter setModifiedAfter(LocalDate modifiedAfter) {
+        this.modifiedAfter = Optional.ofNullable(modifiedAfter);
+        return this;
+    }
+
+    public Optional<LocalDate> getModifiedBefore() {
+        return modifiedBefore;
+    }
+
+    public IngredientFilter setModifiedBefore(LocalDate modifiedBefore) {
+        this.modifiedBefore = Optional.ofNullable(modifiedBefore);
+        return this;
+    }
+
+    public Optional<String> getSortBy() {
+        return sortBy;
+    }
+
+    public IngredientFilter setSortBy(String sortBy) {
+        this.sortBy = Optional.ofNullable(sortBy);
+        return this;
+    }
+
+    public Optional<Boolean> getSortAscending() {
+        return sortAscending;
+    }
+
+    public IngredientFilter setSortAscending(Boolean sortAscending) {
+        this.sortAscending = Optional.ofNullable(sortAscending);
+        return this;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public IngredientFilter setPage(int page) {
+        this.page = Math.max(0, page);
+        return this;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public IngredientFilter setPageSize(int pageSize) {
+        this.pageSize = Math.max(1, pageSize);
+        return this;
+    }
+}
+
+// PARTIE 2: CLASSE DE RÉSULTAT PAGINÉ
+package dao.pagination;
+
+import java.util.List;
+
+public class PagedResult<T> {
+    private final List<T> items;
+    private final int page;
+    private final int pageSize;
+    private final long totalItems;
+    private final int totalPages;
+
+    public PagedResult(List<T> items, int page, int pageSize, long totalItems) {
+        this.items = items;
+        this.page = page;
+        this.pageSize = pageSize;
+        this.totalItems = totalItems;
+        this.totalPages = pageSize > 0 ? (int) Math.ceil((double) totalItems / pageSize) : 0;
+    }
+
+    public List<T> getItems() {
+        return items;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public long getTotalItems() {
+        return totalItems;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public boolean hasNext() {
+        return page < totalPages - 1;
+    }
+
+    public boolean hasPrevious() {
+        return page > 0;
+    }
+}
+
+// PARTIE 3: MISE À JOUR DE L'ENTITÉ INGREDIENT
+package entity;
+
+import java.time.LocalDate;
+
+public class Ingredient {
+    private long id;
+    private String name;
+    private Unit unit;
+    private Double currentPrice;
+    private LocalDate lastModified;
+
+    public Ingredient() {
+    }
+
+    public Ingredient(long id, String name, Unit unit, Double currentPrice, LocalDate lastModified) {
+        this.id = id;
+        this.name = name;
+        this.unit = unit;
+        this.currentPrice = currentPrice;
+        this.lastModified = lastModified;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
+    }
+
+    public Double getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public void setCurrentPrice(Double currentPrice) {
+        this.currentPrice = currentPrice;
+    }
+
+    public LocalDate getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(LocalDate lastModified) {
+        this.lastModified = lastModified;
+    }
+}
+
+// PARTIE 4: MAPPER POUR INGREDIENT
+package dao.mapper;
+
+import entity.Ingredient;
+import entity.Unit;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+
+public class IngredientMapper {
+    private final UnitMapper unitMapper;
+
+    public IngredientMapper() {
+        this.unitMapper = new UnitMapper();
+    }
+
+    public Ingredient mapFromResultSet(ResultSet rs) throws SQLException {
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(rs.getLong("id_ingredient"));
+        ingredient.setName(rs.getString("name"));
+
+        // Map unit using existing mapper
+        String unitString = rs.getString("unit");
+        ingredient.setUnit(unitMapper.mapFromResultSet(unitString));
+
+        // Map price and last modified date
+        ingredient.setCurrentPrice(rs.getDouble("unit_price"));
+
+        // Get date from ResultSet, could be null
+        java.sql.Date sqlDate = rs.getDate("date");
+        if (sqlDate != null) {
+            ingredient.setLastModified(sqlDate.toLocalDate());
+        }
+
+        return ingredient;
+    }
+}
+
+// PARTIE 5: OPÉRATIONS CRUD POUR INGREDIENT
+package dao;
+
+import dao.filter.IngredientFilter;
+import dao.mapper.IngredientMapper;
+import dao.pagination.PagedResult;
+import db.DataSource;
+import entity.Ingredient;
+
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class IngredientCrudOperations {
+    private final DataSource dataSource;
+    private final IngredientMapper ingredientMapper;
+
+    public IngredientCrudOperations(DataSource dataSource, IngredientMapper ingredientMapper) {
+        this.dataSource = dataSource;
+        this.ingredientMapper = ingredientMapper;
+    }
+
+    public IngredientCrudOperations() {
+        this.dataSource = new DataSource();
+        this.ingredientMapper = new IngredientMapper();
+    }
+
+    public PagedResult<Ingredient> findIngredients(IngredientFilter filter) {
+        try (Connection connection = dataSource.getConnection()) {
+            // Build the query
+            StringBuilder queryBuilder = new StringBuilder();
+            List<Object> parameters = new ArrayList<>();
+
+            // Select statement with join to get the latest price
+            queryBuilder.append("SELECT i.id_ingredient, i.name, i.unit, p.unit_price, p.date ");
+            queryBuilder.append("FROM ingredient i ");
+            queryBuilder.append("LEFT JOIN (");
+            queryBuilder.append("  SELECT id_ingredient, unit_price, date ");
+            queryBuilder.append("  FROM price ");
+            queryBuilder.append("  WHERE (id_ingredient, date) IN (");
+            queryBuilder.append("    SELECT id_ingredient, MAX(date) ");
+            queryBuilder.append("    FROM price ");
+            queryBuilder.append("    GROUP BY id_ingredient");
+            queryBuilder.append("  )");
+            queryBuilder.append(") p ON i.id_ingredient = p.id_ingredient ");
+
+            // Where clause with filters
+            StringBuilder whereClause = new StringBuilder();
+
+            // Filter by name
+            filter.getNameContains().ifPresent(name -> {
+                appendWhereCondition(whereClause);
+                whereClause.append("LOWER(i.name) LIKE LOWER(?)");
+                parameters.add("%" + name + "%");
+            });
+
+            // Filter by unit
+            filter.getUnit().ifPresent(unit -> {
+                appendWhereCondition(whereClause);
+                whereClause.append("i.unit = ?::unit");
+                parameters.add(unit.toString());
+            });
+
+            // Filter by price range
+            filter.getMinPrice().ifPresent(minPrice -> {
+                appendWhereCondition(whereClause);
+                whereClause.append("p.unit_price >= ?");
+                parameters.add(minPrice);
+            });
+
+            filter.getMaxPrice().ifPresent(maxPrice -> {
+                appendWhereCondition(whereClause);
+                whereClause.append("p.unit_price <= ?");
+                parameters.add(maxPrice);
+            });
+
+            // Filter by last modified date range
+            filter.getModifiedAfter().ifPresent(modifiedAfter -> {
+                appendWhereCondition(whereClause);
+                whereClause.append("p.date >= ?");
+                parameters.add(java.sql.Date.valueOf(modifiedAfter));
+            });
+
+            filter.getModifiedBefore().ifPresent(modifiedBefore -> {
+                appendWhereCondition(whereClause);
+                whereClause.append("p.date <= ?");
+                parameters.add(java.sql.Date.valueOf(modifiedBefore));
+            });
+
+            // Add where clause to query
+            if (whereClause.length() > 0) {
+                queryBuilder.append(" WHERE ").append(whereClause);
+            }
+
+            // Add order by clause
+            filter.getSortBy().ifPresent(sortBy -> {
+                queryBuilder.append(" ORDER BY ");
+
+                // Map sort field to column name
+                String columnName;
+                switch (sortBy.toLowerCase()) {
+                    case "name":
+                        columnName = "i.name";
+                        break;
+                    case "unit":
+                        columnName = "i.unit";
+                        break;
+                    case "price":
+                        columnName = "p.unit_price";
+                        break;
+                    case "date":
+                    case "lastmodified":
+                        columnName = "p.date";
+                        break;
+                    default:
+                        columnName = "i.id_ingredient";
+                        break;
+                }
+
+                queryBuilder.append(columnName);
+                queryBuilder.append(filter.getSortAscending().orElse(true) ? " ASC" : " DESC");
+            });
+
+            // Count total number of items for pagination
+            String countQuery = "SELECT COUNT(*) FROM (" + queryBuilder.toString() + ") AS count_query";
+            long totalItems;
+
+            try (PreparedStatement countStmt = connection.prepareStatement(countQuery)) {
+                for (int i = 0; i < parameters.size(); i++) {
+                    countStmt.setObject(i + 1, parameters.get(i));
+                }
+
+                try (ResultSet countRs = countStmt.executeQuery()) {
+                    countRs.next();
+                    totalItems = countRs.getLong(1);
+                }
+            }
+
+            // Add limit and offset for pagination
+            queryBuilder.append(" LIMIT ? OFFSET ?");
+            parameters.add(filter.getPageSize());
+            parameters.add(filter.getPage() * filter.getPageSize());
+
+            // Execute query
+            try (PreparedStatement stmt = connection.prepareStatement(queryBuilder.toString())) {
+                for (int i = 0; i < parameters.size(); i++) {
+                    stmt.setObject(i + 1, parameters.get(i));
+                }
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    List<Ingredient> ingredients = new ArrayList<>();
+                    while (rs.next()) {
+                        ingredients.add(ingredientMapper.mapFromResultSet(rs));
+                    }
+
+                    return new PagedResult<>(ingredients, filter.getPage(), filter.getPageSize(), totalItems);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding ingredients", e);
+        }
+    }
+
+    private void appendWhereCondition(StringBuilder whereClause) {
+        if (whereClause.length() > 0) {
+            whereClause.append(" AND ");
+        }
+    }
+}
+
+// PARTIE 6: TEST UNITAIRE
+package dao;
+
+import dao.filter.IngredientFilter;
+import dao.pagination.PagedResult;
+import db.DataSource;
+import entity.Ingredient;
+import entity.Unit;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+public class IngredientCrudOperationsTest {
+
+    @Mock
+    private DataSource mockDataSource;
+
+    @Mock
+    private Connection mockConnection;
+
+    @Mock
+    private PreparedStatement mockPreparedStatement;
+
+    @Mock
+    private ResultSet mockResultSet;
+
+    @Mock
+    private ResultSet mockCountResultSet;
+
+    private IngredientCrudOperations ingredientCrudOperations;
+
+    @BeforeEach
+    void setUp() throws SQLException {
+        ingredientCrudOperations = new IngredientCrudOperations(mockDataSource, new dao.mapper.IngredientMapper());
+
+        when(mockDataSource.getConnection()).thenReturn(mockConnection);
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
+    }
+
+    @Test
+    void testFindIngredientsWithNameFilter() throws SQLException {
+        // Setup mock behavior
+        when(mockPreparedStatement.executeQuery()).thenReturn(mockCountResultSet, mockResultSet);
+        when(mockCountResultSet.next()).thenReturn(true);
+        when(mockCountResultSet.getLong(1)).thenReturn(2L);
+
+        when(mockResultSet.next()).thenReturn(true, true, false);
+
+        // First ingredient
+        when(mockResultSet.getLong("id_ingredient")).thenReturn(1L, 2L);
+        when(mockResultSet.getString("name")).thenReturn("Tomato", "Potato");
+        when(mockResultSet.getString("unit")).thenReturn("G", "G");
+        when(mockResultSet.getDouble("unit_price")).thenReturn(2.5, 1.8);
+
+        Date sqlDate = Date.valueOf(LocalDate.of(2025, 1, 15));
+        when(mockResultSet.getDate("date")).thenReturn(sqlDate, sqlDate);
+
+        // Execute test
+        IngredientFilter filter = new IngredientFilter()
+                .setNameContains("to")
+                .setSortBy("name")
+                .setSortAscending(true)
+                .setPage(0)
+                .setPageSize(10);
+
+        PagedResult<Ingredient> result = ingredientCrudOperations.findIngredients(filter);
+
+        // Assertions
+        assertNotNull(result);
+        assertEquals(0, result.getPage());
+        assertEquals(10, result.getPageSize());
+        assertEquals(2, result.getTotalItems());
+        assertEquals(1, result.getTotalPages());
+
+        List<Ingredient> ingredients = result.getItems();
+        assertEquals(2, ingredients.size());
+
+        assertEquals("Potato", ingredients.get(1).getName());
+        assertEquals(Unit.G, ingredients.get(1).getUnit());
+        assertEquals(1.8, ingredients.get(1).getCurrentPrice());
+        assertEquals(LocalDate.of(2025, 1, 15), ingredients.get(1).getLastModified());
+    }
+
+    @Test
+    void testFindIngredientsWithMultipleFilters() throws SQLException {
+        // Setup mock behavior
+        when(mockPreparedStatement.executeQuery()).thenReturn(mockCountResultSet, mockResultSet);
+        when(mockCountResultSet.next()).thenReturn(true);
+        when(mockCountResultSet.getLong(1)).thenReturn(1L);
+
+        when(mockResultSet.next()).thenReturn(true, false);
+
+        // One ingredient matching all criteria
+        when(mockResultSet.getLong("id_ingredient")).thenReturn(1L);
+        when(mockResultSet.getString("name")).thenReturn("Olive Oil");
+        when(mockResultSet.getString("unit")).thenReturn("L");
+        when(mockResultSet.getDouble("unit_price")).thenReturn(8.5);
+
+        Date sqlDate = Date.valueOf(LocalDate.of(2025, 2, 1));
+        when(mockResultSet.getDate("date")).thenReturn(sqlDate);
+
+        // Execute test with multiple filters
+        IngredientFilter filter = new IngredientFilter()
+                .setNameContains("oil")
+                .setUnit(Unit.L)
+                .setMinPrice(5.0)
+                .setMaxPrice(10.0)
+                .setModifiedAfter(LocalDate.of(2025, 1, 1))
+                .setModifiedBefore(LocalDate.of(2025, 2, 28))
+                .setSortBy("price")
+                .setSortAscending(false)
+                .setPage(0)
+                .setPageSize(5);
+
+        PagedResult<Ingredient> result = ingredientCrudOperations.findIngredients(filter);
+
+        // Assertions
+        assertNotNull(result);
+        assertEquals(1, result.getTotalItems());
+
+        List<Ingredient> ingredients = result.getItems();
+        assertEquals(1, ingredients.size());
+
+        Ingredient ingredient = ingredients.get(0);
+        assertEquals("Olive Oil", ingredient.getName());
+        assertEquals(Unit.L, ingredient.getUnit());
+        assertEquals(8.5, ingredient.getCurrentPrice());
+        assertEquals(LocalDate.of(2025, 2, 1), ingredient.getLastModified());
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+package dao;
+
+import dao.filter.IngredientFilter;
+import dao.mapper.IngredientMapper;
+import dao.pagination.PagedResult;
+import db.DataSource;
+import entity.Ingredient;
+import entity.Unit;
+import org.junit.jupiter.api.*;
+
+import java.sql.Connection;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class IngredientCrudOperationsIT {
+
+    private IngredientCrudOperations ingredientDao;
+    private DataSource dataSource;
+
+    @BeforeAll
+    void setUpDatabase() throws Exception {
+        // Instanciation de la source de données et du DAO
+        dataSource = new DataSource();
+        ingredientDao = new IngredientCrudOperations(dataSource, new IngredientMapper());
+
+        // Préparation de la base : nettoyage puis insertion des données de test
+        try (Connection conn = dataSource.getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            // Nettoyer les tables (l'ordre est important si une contrainte de clé étrangère existe)
+            stmt.executeUpdate("DELETE FROM price;");
+            stmt.executeUpdate("DELETE FROM ingredient;");
+
+            // Insertion des ingrédients
+            stmt.executeUpdate("INSERT INTO ingredient (id_ingredient, name, unit) VALUES (1, 'Tomate', 'G');");
+            stmt.executeUpdate("INSERT INTO ingredient (id_ingredient, name, unit) VALUES (2, 'Lait', 'L');");
+            stmt.executeUpdate("INSERT INTO ingredient (id_ingredient, name, unit) VALUES (3, 'Oeuf', 'U');");
+            stmt.executeUpdate("INSERT INTO ingredient (id_ingredient, name, unit) VALUES (4, 'Carotte', 'G');");
+
+            // Insertion des prix associés
+            stmt.executeUpdate("INSERT INTO price (id_ingredient, unit_price, date) VALUES (1, 2.5, '2024-01-01');");
+            stmt.executeUpdate("INSERT INTO price (id_ingredient, unit_price, date) VALUES (2, 1.8, '2024-01-02');");
+            stmt.executeUpdate("INSERT INTO price (id_ingredient, unit_price, date) VALUES (3, 3.0, '2024-01-03');");
+            stmt.executeUpdate("INSERT INTO price (id_ingredient, unit_price, date) VALUES (4, 2.0, '2024-01-04');");
+        }
+    }
+
+    @AfterAll
+    void cleanUpDatabase() throws Exception {
+        // Nettoyer la base après les tests
+        try (Connection conn = dataSource.getConnection();
+             Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate("DELETE FROM price;");
+            stmt.executeUpdate("DELETE FROM ingredient;");
+        }
+    }
+
+    @Test
+    void testFilterByName() {
+        // On filtre par nom contenant "tom" (non sensible à la casse)
+        IngredientFilter filter = new IngredientFilter().setNameContains("tom");
+        PagedResult<Ingredient> result = ingredientDao.findIngredients(filter);
+
+        // On attend qu'un seul ingrédient soit retourné : "Tomate"
+        assertEquals(1, result.getItems().size());
+        assertEquals("Tomate", result.getItems().get(0).getName());
+    }
+
+    @Test
+    void testFilterByUnit() {
+        // On filtre par unité G
+        IngredientFilter filter = new IngredientFilter().setUnit(Unit.G);
+        PagedResult<Ingredient> result = ingredientDao.findIngredients(filter);
+
+        // On attend 2 ingrédients avec l'unité G : Tomate et Carotte
+        assertEquals(2, result.getItems().size());
+    }
+
+    @Test
+    void testFilterByPriceRange() {
+        // On filtre pour les ingrédients avec un prix entre 2.0 et 2.5
+        IngredientFilter filter = new IngredientFilter().setMinPrice(2.0).setMaxPrice(2.5);
+        PagedResult<Ingredient> result = ingredientDao.findIngredients(filter);
+
+        // Tomate (2.5) et Carotte (2.0) devraient être retournés
+        assertEquals(2, result.getItems().size());
+    }
+
+    @Test
+    void testFilterByDateRange() {
+        // On filtre pour les ingrédients dont la date de modification est postérieure ou égale au 2024-01-02
+        IngredientFilter filter = new IngredientFilter().setModifiedAfter(LocalDate.of(2024, 1, 2));
+        PagedResult<Ingredient> result = ingredientDao.findIngredients(filter);
+
+        // On attend Oeuf (2024-01-03) et Carotte (2024-01-04)
+        assertEquals(2, result.getItems().size());
+    }
+
+    @Test
+    void testSortingAndPagination() {
+        // On trie par prix en ordre décroissant et on pagine (page 0, taille 2)
+        IngredientFilter filter = new IngredientFilter()
+                .setSortBy("price")
+                .setSortAscending(false)
+                .setPage(0)
+                .setPageSize(2);
+        PagedResult<Ingredient> result = ingredientDao.findIngredients(filter);
+
+        // Ordre attendu par prix décroissant :
+        // Oeuf (3.0), Tomate (2.5), Carotte (2.0), Lait (1.8)
+        List<Ingredient> ingredients = result.getItems();
+        assertEquals(2, ingredients.size());
+        assertEquals("Oeuf", ingredients.get(0).getName());
+        assertEquals("Tomate", ingredients.get(1).getName());
+    }
+}

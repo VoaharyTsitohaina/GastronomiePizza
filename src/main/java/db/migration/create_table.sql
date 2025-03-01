@@ -36,3 +36,20 @@ create table if not exists price (
     primary key (id_ingredient, unit_price)
 );
 
+DO
+$$
+    BEGIN
+        IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'movement_type') THEN
+            CREATE TYPE movement_type AS ENUM ('entree', 'sortie');
+        END IF;
+    END
+$$;
+
+create table if not exists stock_movement (
+    id_stock bigserial primary key,
+    id_ingredient bigint references ingredient(id_ingredient),
+    movement_type movement_type,
+    quantity double precision,
+    movement_datetime timestamp
+);
+
